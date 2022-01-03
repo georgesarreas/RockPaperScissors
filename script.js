@@ -1,43 +1,68 @@
 const options = ['rock', 'paper', 'scissors'];
-const computerSelection = computerPlay();
-
 
 function computerPlay(){
     return options[Math.floor(Math.random()*3)];
 }
 
+let playerScore = 0;
+let compScore = 0;
 
-function playRound(computerSelection, playerSelection){
+function playRound(){
+
+    const computerSelection = computerPlay();
+    const playerSelection = prompt("rock, paper or scissors?").toLowerCase();
+
     if (computerSelection === 'rock' ){
         if (playerSelection === 'rock'){
-            return "TIE!"
+            alert("TIE!");
         }else if (playerSelection === 'paper'){
-            return "YOU WIN! Paper beats rock"
+            playerScore++;
+            alert("YOU WIN! Paper beats rock");
         }else if (playerSelection === 'scissors'){
-            return "YOU LOSE! Rock beats Scissors"
+            compScore++;
+            alert ("YOU LOSE! Rock beats Scissors");
         }
 
     } else if (computerSelection === 'paper'){
         if (playerSelection === 'rock'){
-            return "YOU LOSE! Paper beats rock"
+            compScore++;
+            alert ("YOU LOSE! Paper beats rock");
         }else if (playerSelection === 'paper'){
-            return "TIE!"
-        }else if (playerSelection === 'scissors'){
-            return "YOU WIN! Scissors beats Paper"
+            alert ("TIE!");
+        }else if ( playerSelection === 'scissors' ) {
+            playerScore++;
+            alert ("YOU WIN! Scissors beats Paper");
         }
 
     }else if (computerSelection === 'scissors'){
-        if (playerSelection === 'rock'){
-            return "YOU WIN! Rock beats Scissors"
+        if (playerSelection === 'rock') {
+            playerScore++;
+            alert ("YOU WIN! Rock beats Scissors");
         }else if (playerSelection === 'paper'){
-            return "YOU LOSE! Scissors beats Paper"
+            compScore++;
+            alert ("YOU LOSE! Scissors beats Paper");
         }else if (playerSelection === 'scissors'){
-            return "TIE!"
+            alert ("TIE!");
         }
     }
 }
 
 
-const playerSelection = prompt("rock, paper or scissors?").toLowerCase();
-console.log(playRound(computerSelection,playerSelection));
+function game() {
+    
+    playRound();
+    playRound();
+    playRound();
+    playRound();
+    playRound();
+    if  (compScore > playerScore){
+        alert("YOU LOOSE! \nplease refresh the page to play again");
+    } else if (playerScore > compScore){
+        alert('Congratulations! You win! At life!\nplease refresh the page to play again');
+    }else {
+        alert('Are you even trying?\nplease refresh the page to play again');
+    }
+    
+}
+console.log(game());
 
