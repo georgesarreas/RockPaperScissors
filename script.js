@@ -1,4 +1,4 @@
-const options = ['rock', 'paper', 'scissors'];
+/*const options = ['rock', 'paper', 'scissors'];
 
 function computerPlay(){
     return options[Math.floor(Math.random()*3)];
@@ -65,4 +65,7 @@ function game() {
     
 }
 console.log(game());
+*/ 
+
+
 
