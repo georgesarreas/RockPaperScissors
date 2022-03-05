@@ -1,75 +1,4 @@
-/*const options = ['rock', 'paper', 'scissors'];
 
-function computerPlay(){
-    return options[Math.floor(Math.random()*3)];
-}
-
-let playerScore = 0;
-let compScore = 0;
-
-function playRound(){
-
-    const computerSelection = computerPlay();
-    const playerSelection = prompt("rock, paper or scissors?").toLowerCase();
-
-    if (computerSelection === 'rock' ){
-        if (playerSelection === 'rock'){
-            alert("TIE!");
-        }else if (playerSelection === 'paper'){
-            playerScore++;
-            alert("YOU WIN! Paper beats rock");
-        }else if (playerSelection === 'scissors'){
-            compScore++;
-            alert ("YOU LOSE! Rock beats Scissors");
-        }
-
-    } else if (computerSelection === 'paper'){
-        if (playerSelection === 'rock'){
-            compScore++;
-            alert ("YOU LOSE! Paper beats rock");
-        }else if (playerSelection === 'paper'){
-            alert ("TIE!");
-        }else if ( playerSelection === 'scissors' ) {
-            playerScore++;
-            alert ("YOU WIN! Scissors beats Paper");
-        }
-
-    }else if (computerSelection === 'scissors'){
-        if (playerSelection === 'rock') {
-            playerScore++;
-            alert ("YOU WIN! Rock beats Scissors");
-        }else if (playerSelection === 'paper'){
-            compScore++;
-            alert ("YOU LOSE! Scissors beats Paper");
-        }else if (playerSelection === 'scissors'){
-            alert ("TIE!");
-        }
-    }
-}
-
-
-function game() {
-    
-    playRound();
-    playRound();
-    playRound();
-    playRound();
-    playRound();
-    if  (compScore > playerScore){
-        alert("YOU LOOSE! \nplease refresh the page to play again");
-    } else if (playerScore > compScore){
-        alert('Congratulations! You win! At life!\nplease refresh the page to play again');
-    }else {
-        alert('Are you even trying?\nplease refresh the page to play again');
-    }
-    
-}
-console.log(game());
-*/ 
-
-
-
-/* here on down is the code for the ui rock-paper-scissors*/
 
 const choices = document.querySelectorAll(".choices");
 const score  = document.getElementById('score');
@@ -88,7 +17,7 @@ function playRound(e) {
     const playerSelection = e.target.id;
     const computerSelection = computerPlay();
     const winner= determineWinner(playerSelection,computerSelection);
-    console.log(playerSelection,computerSelection,winner);
+    displayWinner(winner,computerSelection);
 };
 
 //the computer's choice function
@@ -134,5 +63,60 @@ function determineWinner(playerSelection,computerSelection) {
         }
     }
 }
+
+function displayWinner(winner, computerSelection) {
+    if (winner === 'player') {
+      totalScore.player++;
+      // show the corresponding result
+      result.innerHTML = ` 
+        <h1 class="text-win">You Win</h1>
+        <i class="fas fa-hand-${computerSelection} fa-10x"></i>
+        <p>Computer Chose <strong>${computerSelection.charAt(0).toUpperCase() +
+          computerSelection.slice(1)}</strong></p>
+      `;
+    } else if (winner === 'computer') {
+      totalScore.computer++;
+      // same as above
+      result.innerHTML = `
+        <h1 class="text-lose">You Lose</h1>
+        <i class="fas fa-hand-${computerSelection} fa-10x"></i>
+        <p>Computer Chose <strong>${computerSelection.charAt(0).toUpperCase() +
+          computerSelection.slice(1)}</strong></p>
+      `;
+    } else {
+      result.innerHTML = `
+        <h1>It's A Draw</h1>
+        <i class="fas fa-hand-${computerSelection} fa-10x"></i>
+        <p>Computer Chose <strong>${computerSelection.charAt(0).toUpperCase() +
+          computerSelection.slice(1)}</strong></p>
+      `;
+    }
+     // Show score
+  score.innerHTML = `
+  <p>Player: ${totalScore.player}</p>
+  <p>Computer: ${totalScore.computer}</p>
+  `;
+
+modal.style.display = 'block';
+}
+
+// Restart game
+function restartGame() {
+totalScore.player = 0;
+totalScore.computer = 0;
+score.innerHTML = `
+  <p>Player: 0</p>
+  <p>Computer: 0</p>
+`;
+}
+
+// Clear modal
+function clearModal(e) {
+if (e.target == modal) {
+  modal.style.display = 'none';
+}
+}
 //now for the event listener
 choices.forEach(choice => choice.addEventListener('click', playRound));
+window.addEventListener('click', clearModal);           //just to clear the pop up
+restart.addEventListener('click', restartGame);
